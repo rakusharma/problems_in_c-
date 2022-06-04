@@ -10,6 +10,17 @@
 using namespace std;
 class Sol {
 	public:
+
+		vector<int> twosum_o(vector<int>& nums, int target)
+		{
+			vector<int>::iterator it = nums.begin();
+			sort(nums.begin(), nums.end());
+			t = target - *it;
+			for (it = it + 1; it != nums.end(); ++it){
+				if t 
+			}
+
+		}
 		vector<int> twosum(vector<int>& nums, int target)
 		{
 
@@ -22,7 +33,7 @@ class Sol {
 			for (; it != nums.end(); ++it,++i)
 			for (; next != nums.end(); ++next, ++j) {
 				if (*it > target) break;
-				if ( *it == *next) continue;
+				if ( *it == *nexti && i == j) continue;
 				s = *it + *next;
 
 				if (s == target) {
