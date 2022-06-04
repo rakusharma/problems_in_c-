@@ -2,6 +2,8 @@
 #include<string>
 #include<vector>
 #include<algorithm>
+#include<utility>
+#include<map>
 
 
 /*solution: https://leetcode.com/problems/two-sum*/
@@ -15,10 +17,30 @@ class Sol {
 		{
 			vector<int>::iterator it = nums.begin();
 			sort(nums.begin(), nums.end());
-			t = target - *it;
-			for (it = it + 1; it != nums.end(); ++it){
-				if t 
+			vector<int> sums;
+
+			//{2,3,11,16}, 27  2,25 3,24 11,16 16,11
+			map<int, int> m;
+			int t, i=0;
+			for (it = it ; it != nums.end(); ++it, ++i){
+				 t  = target - *it;
+				 m[t] = *it;
 			}
+
+
+			size_t f;
+
+			for (it = nums.begin(), i = 0; it != nums.end(); ++it, ++i){
+				if ( (f = m.count(*it)) > 0) {
+
+					sums.push_back(*it);
+					sums.push_back(target - *it);
+					break;
+
+				}
+			}
+
+			return sums;
 
 		}
 		vector<int> twosum(vector<int>& nums, int target)
@@ -33,7 +55,7 @@ class Sol {
 			for (; it != nums.end(); ++it,++i)
 			for (; next != nums.end(); ++next, ++j) {
 				if (*it > target) break;
-				if ( *it == *nexti && i == j) continue;
+				if ( *it == *next && i == j) continue;
 				s = *it + *next;
 
 				if (s == target) {
@@ -63,7 +85,7 @@ int main()
 	vector<int> i(x, x + sizeof(x)/sizeof(x[0])), r;
 	vector<int>::iterator it;
 
-	r = s.twosum(i, 9);
+	r = s.twosum_o(i, 9);
 	cout<<"[ ";
 	for(it = r.begin(); it !=r.end(); ++it)
 		cout << *it <<" ";
