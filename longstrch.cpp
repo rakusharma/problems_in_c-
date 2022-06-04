@@ -3,6 +3,8 @@
 #include<vector>
 #include<algorithm>
 
+/*solution of https://leetcode.com/problems/longest-string-chain*/
+
 using namespace std;
 
 struct str_sort {
