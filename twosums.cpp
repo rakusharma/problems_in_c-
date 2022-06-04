@@ -4,6 +4,9 @@
 #include<algorithm>
 
 
+/*solution: https://leetcode.com/problems/two-sum*/
+
+
 using namespace std;
 class Sol {
 	public:
@@ -12,18 +15,19 @@ class Sol {
 
 			sort(nums.begin(), nums.end());
 			vector<int>::iterator it = nums.begin(), next = it;
+			int i = 0, j = 0;
 			vector<int> sums;
 			int s;
 
-			for (; it != nums.end(); ++it)
-			for (; next != nums.end(); ++next) {
+			for (; it != nums.end(); ++it,++i)
+			for (; next != nums.end(); ++next, ++j) {
 				if (*it > target) break;
 				if ( *it == *next) continue;
 				s = *it + *next;
 
 				if (s == target) {
-					sums.push_back(*it);
-					sums.push_back(*next);
+					sums.push_back(i);
+					sums.push_back(j);
 					break;
 				}
 				else if (s > target)
