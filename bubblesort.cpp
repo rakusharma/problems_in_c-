@@ -3,6 +3,11 @@
 #include<vector>
 using namespace std;
 
+/*push the larget element to end by comparing two items*/
+/*outer loop will loop through elements*/
+/*inner loop will loop with iteration minus number of items been pushed*/
+/*for optimization, break the loop when no swap happened -> all items are swapped*/
+
 class Solution {
 	public:
 
