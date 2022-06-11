@@ -25,6 +25,11 @@ class Solution {
 			cout << "\n";
 		}
 
+		void sort_all(vector<int> &a)
+		{
+			sort(a.begin(), a.end(), compare);
+		}
+
 
 		void insert(vector<int>& a, vector<int>& b)
 		{
@@ -33,7 +38,6 @@ class Solution {
 			for(; t != b.end(); ++t)
 				a.push_back(*t);
 
-			sort(a.begin(), a.end(), compare);
 
 		}
 
@@ -60,16 +64,17 @@ class Solution {
 			if (vl.size() > 2) ms(vl, l);
 			if (vr.size() > 1) ms(vr, r);
 			l = vl;
-			insert(res, l);
 			r = vr;
+			insert(res, l);
 			insert(res, r);
+			sort_all(res);
 		}
 };
 
 int main()
 {
 	Solution s;
-	int a[] = {2,1,6,19,23,11,23,12};
+	int a[] = {2,1,6,19,29,11,23,12,99,123,12,555,222,888,33,121,12121};
 	//int a[] = {1,2,3,4,6};
 	vector<int> v(a, a + sizeof(a)/sizeof(a[0]));
 	vector<int>t;
