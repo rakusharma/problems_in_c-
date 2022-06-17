@@ -16,7 +16,7 @@ class Bin_tree {
 		Bin_tree(){node = 0;}
 
 		struct node* node;
-		//list <struct nod*>q;
+		list <struct node*>q;
 
 		void print()
 		{
@@ -27,6 +27,44 @@ class Bin_tree {
 			print_preorder(node);
 			cout <<"\n" << "postorder ->";
 			print_postorder(node);
+			cout <<"\n" << "level order ->";
+			print_levelorder(node);
+		}
+
+		void print_q(list<struct node*>& l)
+		{
+
+			list<struct node*>::iterator it = l.begin();
+
+			cout<<"queue size " << l.size()<<endl;
+
+			for (; it != l.end(); ++it)
+				cout <<"Ptr -> "<<*it;
+			cout<<"\n";
+
+		}
+
+
+
+		/*breadth first or level order
+		 *
+		 */
+
+		void print_levelorder(struct node* n)
+		{
+			if (n == 0)return;
+			cout <<n->v <<" ";
+			if (n->l)q.push_back(n->l);
+			if (n->r)q.push_back(n->r);
+
+			while (q.size() != 0) {
+				struct node*_n = q.front();
+				q.pop_front();
+				cout << _n->v <<" ";
+				if (_n->l)q.push_back(_n->l);
+				if (_n->r)q.push_back(_n->r);
+			}
+
 		}
 
 		/*post order -> left, right, root
@@ -35,12 +73,9 @@ class Bin_tree {
 		 */
 		void print_postorder(struct node *n)
 		{
-			if (n != 0) {
-				print_postorder(n->l);
-			}
 			if (n == 0)return;
-			if(n->r != 0)
-				print_postorder(n->r);
+			print_postorder(n->l);
+			print_postorder(n->r);
 			cout<<n->v<<" ";
 		}
 
@@ -53,33 +88,24 @@ class Bin_tree {
 		/*pre order - root, left, right*/
 		void print_preorder(struct node *n)
 		{
-			if (n != 0) {
-				cout << n->v << " ";
-				print_preorder(n->l);
-			}
 			if (n == 0)return;
-			if (n->r != 0) 
-				print_preorder(n->r);
+			cout << n->v << " ";
+			print_preorder(n->l);
+			print_preorder(n->r);
 
 		}
-		
-		 /*inorder -> left node, root, right node
+
+		/*inorder -> left node, root, right node
 		 *
 		 *
 		 */
 		void print_inorder(struct node *n)
 		{
 
-			if (n != 0) {
-				/*make sure we revisit once*/
-				//q.push_back(n->l);
-				print_inorder(n->l);
-			}
-		    if (n == 0) { return;}
+			if (n == 0) { return;}
+			print_inorder(n->l);
 			cout <<n->v <<" ";
-			if (n->r != 0) {
-				print_inorder(n->r);
-			}
+			print_inorder(n->r);
 		}
 
 		void print_tree(struct node *n)
@@ -129,13 +155,13 @@ int main()
 {
 	Bin_tree t;
 
-/*
- *				 100
- *				/	\
- *             20	200
- *			  /  \	 /  \
- *			 10	 30 150	 300
-*/
+	/*
+	 *				 100
+	 *				/	\
+	 *             20	200
+	 *			  /  \	 /  \
+	 *			 10	 30 150	 300
+	 */
 	list<int> l({100, 20, 200, 10, 30, 150, 300});
 	list<int>::iterator i = l.begin();
 #if 0
@@ -149,7 +175,7 @@ int main()
 	cout << "node added  " <<t.node <<"  "<<t.node->l  <<"  "<< t.node->r <<"\n";
 #endif
 	for(; i != l.end(); i++)
-	   t.add(*i);	
+		t.add(*i);	
 	t.print();
 
 	return 0;
