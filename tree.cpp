@@ -17,30 +17,109 @@ class Bin_tree {
 
 		struct node* node;
 		list <struct node*>q;
+		int max(int i, int j)
+		{
+			return ( i>j ? i : j);
+		}
+		int  height(struct node* n)
+		{
+			if (n == 0){
+				return 0;
+			}
+
+			int l = height(n->l);
+			int r = height(n->r);
+			if (l > r)
+				return(l + 1);
+			else
+			   	return (r + 1);
+			//return(max(l, r) + 1);
+
+		}
+
+
+		/*This increment from top to down*/
+
+		int  height(struct node* n, int i)
+		{
+			if (n == 0){
+				return i;
+			}
+			if (n->r!=0 || n->l!=0)		++i;
+
+			return(max(height(n->l, i), height(n->r, i)));
+
+		}
 
 		void print()
 		{
 
+			int ht = height(node);
+			cout << " height " <<ht;
 			cout<<"inorder ->  ";
 			print_inorder(node);
+#if 0
 			cout <<"\n" << "preorder ->";
 			print_preorder(node);
 			cout <<"\n" << "postorder ->";
 			print_postorder(node);
 			cout <<"\n" << "level order ->";
 			print_levelorder(node);
+			cout <<"\n" << "level order(recursion) ->";
+			print_levelorder_rec();
+			print_q(q);
+#endif
 		}
 
 		void print_q(list<struct node*>& l)
 		{
 
 			list<struct node*>::iterator it = l.begin();
+			struct node*_t;
 
 			cout<<"queue size " << l.size()<<endl;
 
-			for (; it != l.end(); ++it)
-				cout <<"Ptr -> "<<*it;
+			//for (; it != l.end(); ++it) {
+			while( q.size() != 0) {
+				_t = q.front();
+				q.pop_front();
+				cout <<"Ptr -> "<<_t <<" value ->"<<_t->v;
+			}
 			cout<<"\n";
+
+		}
+
+		/**
+		 * using height
+		 */
+		void print_levelorder_rec_2()
+		{
+
+		}
+
+
+
+		/**
+		 * push to node
+		 */
+		void print_levelorder_rec()
+		{
+			if(q.empty()) {
+				q.push_back(node);
+				print_levelorder_rec();
+			}
+			int sz = q.size();
+			for(int i = 0; i < sz; ++i) {
+				struct node* _t;
+				_t = q.front();
+                q.pop_front();
+				cout << _t->v <<" ";
+				if(_t->l)q.push_back(_t->l);
+				if(_t->r)q.push_back(_t->r);
+			}
+
+			if (q.size() != 0)print_levelorder_rec();
+
 
 		}
 
@@ -60,7 +139,7 @@ class Bin_tree {
 			while (q.size() != 0) {
 				struct node*_n = q.front();
 				q.pop_front();
-				cout << _n->v <<" ";
+				cout <<_n<<" "<<_n->v <<" ";
 				if (_n->l)q.push_back(_n->l);
 				if (_n->r)q.push_back(_n->r);
 			}
@@ -162,7 +241,9 @@ int main()
 	 *			  /  \	 /  \
 	 *			 10	 30 150	 300
 	 */
-	list<int> l({100, 20, 200, 10, 30, 150, 300});
+	//list<int> l({100, 20, 200, 10, 30, 150, 300});
+	//list<int> l({50, 35, 57, 30, 40, 52, 58, 11});
+	list<int> l({150,250,270,320,350});
 	list<int>::iterator i = l.begin();
 #if 0
 	t.add(10);
