@@ -17,9 +17,68 @@ class Bin_tree {
 
 		struct node* node;
 		list <struct node*>q;
+		int ht;
+		vector<vector<struct node*>>z{10, vector<struct node*>()};
 		int max(int i, int j)
 		{
 			return ( i>j ? i : j);
+		}
+
+		void print_level_order_simple()
+		{
+			int ht = height(node);
+			for (int i = 1; i <= ht; ++i) {
+				current_level(node, i);
+			}
+		}
+
+		void current_level(struct node* n, int l)
+		{
+			if(n == 0)return;
+			if ( l == 1)cout << n <<" "<<n->v <<endl;
+			else {
+				current_level(n->l, l - 1);
+				current_level(n->r, l - 1);
+			}
+
+		}
+
+		/*A very stupid solution*/
+		void level_order_ht(struct node* n)
+		{
+
+			ht = height(n);
+			print_level_order_ht(n);
+			z[0].push_back(n); 
+			cout << z[0].size()<<endl;
+			cout << z[1].size()<<endl;
+			cout << z[2].size()<<endl;
+
+			vector<struct node*>v;
+			vector<vector<struct node*>>::iterator _it = z.begin();
+			for(_it; _it != z.end(); ++_it) {
+				v = *_it;
+				vector<struct node*>::iterator t = v.begin();
+				for(; t !=v.end(); ++t)
+					cout<<*t<<"  "<< ((struct node*)(*t))->v<<" ";
+						;
+				cout<<endl;
+			}
+		}
+
+		int print_level_order_ht(struct node *n)
+		{
+
+			if (n == 0)return 0;
+			int l = print_level_order_ht(n->l);
+			cout << "node ->" << n->l << " level " << l <<endl;
+			if(l > 0)z[ht-l].push_back(n->l);
+			int r = print_level_order_ht(n->r);
+			cout << "node ->" << n->r << " level " << r <<endl;
+			if(r > 0)z[ht-r].push_back(n->r);
+
+			return (max(l, r) + 1);
+
 		}
 		int  height(struct node* n)
 		{
@@ -29,15 +88,8 @@ class Bin_tree {
 
 			int l = height(n->l);
 			int r = height(n->r);
-			if (l > r)
-				return(l + 1);
-			else
-			   	return (r + 1);
-			//return(max(l, r) + 1);
-
+			return(max(l, r) + 1);
 		}
-
-
 		/*This increment from top to down*/
 
 		int  height(struct node* n, int i)
@@ -55,9 +107,20 @@ class Bin_tree {
 		{
 
 			int ht = height(node);
-			cout << " height " <<ht;
+			cout << " height " <<ht <<endl;
+			print_level_order_simple();
 			cout<<"inorder ->  ";
 			print_inorder(node);
+			level_order_ht(node);
+			/*
+			print_level_order_ht(node);
+			list<struct node*>::iterator it = z.begin();
+			for(; it != z.end(); ++it) {
+				struct node* x = (struct node*)(*it);
+				cout << x <<" " <<x->v <<endl;
+			}
+			*/
+
 #if 0
 			cout <<"\n" << "preorder ->";
 			print_preorder(node);
@@ -112,7 +175,7 @@ class Bin_tree {
 			for(int i = 0; i < sz; ++i) {
 				struct node* _t;
 				_t = q.front();
-                q.pop_front();
+				q.pop_front();
 				cout << _t->v <<" ";
 				if(_t->l)q.push_back(_t->l);
 				if(_t->r)q.push_back(_t->r);
@@ -208,6 +271,9 @@ class Bin_tree {
 			else if (v < node->v) add_node(&node, &node->l, v);
 
 		}
+
+		/*This is BST. Binary tree do not follow num < root or num > root*/
+
 		void add_node(struct node** p, struct node** node, int v)
 		{
 			struct node *_node;
@@ -228,37 +294,38 @@ class Bin_tree {
 			else
 				add_node(node, &((*node)->l), v);
 		}
-};
+		};
 
-int main()
-{
-	Bin_tree t;
+		int main()
+		{
+			Bin_tree t;
 
-	/*
-	 *				 100
-	 *				/	\
-	 *             20	200
-	 *			  /  \	 /  \
-	 *			 10	 30 150	 300
-	 */
-	//list<int> l({100, 20, 200, 10, 30, 150, 300});
-	//list<int> l({50, 35, 57, 30, 40, 52, 58, 11});
-	list<int> l({150,250,270,320,350});
-	list<int>::iterator i = l.begin();
+			/*
+			 *				 100
+			 *				/	\
+			 *             20	200
+			 *			  /  \	 /  \
+			 *			 10	 30 150	 300
+			 */
+			list<int> l({100, 20, 200, 10, 30, 150, 300});
+			//list<int> l({50, 35, 57, 30, 40, 52, 58, 11});
+			//list<int> l({150,250,270,320,350});
+			list<int>::iterator i = l.begin();
 #if 0
-	t.add(10);
-	cout << "node added  " <<t.node <<"  "<<t.node->l  <<"  "<< t.node->r <<"\n";
-	t.add(11);
-	cout << "node added  " <<t.node <<"  "<<t.node->l  <<"  "<< t.node->r <<"\n";
-	t.add(9);
-	cout << "node added  " <<t.node <<"  "<<t.node->l  <<"  "<< t.node->r <<"\n";
-	t.add(8);
-	cout << "node added  " <<t.node <<"  "<<t.node->l  <<"  "<< t.node->r <<"\n";
+			t.add(10);
+			cout << "node added  " <<t.node <<"  "<<t.node->l  <<"  "<< t.node->r <<"\n";
+			t.add(11);
+			cout << "node added  " <<t.node <<"  "<<t.node->l  <<"  "<< t.node->r <<"\n";
+			t.add(9);
+			cout << "node added  " <<t.node <<"  "<<t.node->l  <<"  "<< t.node->r <<"\n";
+			t.add(8);
+			cout << "node added  " <<t.node <<"  "<<t.node->l  <<"  "<< t.node->r <<"\n";
 #endif
-	for(; i != l.end(); i++)
-		t.add(*i);	
-	t.print();
+			for(; i != l.end(); i++)
+				t.add(*i);	
 
-	return 0;
-}
+			t.print();
+
+			return 0;
+		}
 
