@@ -11,6 +11,9 @@ struct node{
 	struct node* r;
 };
 
+
+/*question - find total number of nodes in each level*/
+
 class Bin_tree {
 	public:
 		Bin_tree(){node = 0;}
@@ -22,6 +25,33 @@ class Bin_tree {
 		int max(int i, int j)
 		{
 			return ( i>j ? i : j);
+		}
+
+		void find_num_nodes_level(struct node* n)
+		{
+			int ht = height(n);
+
+			for(int i = 1; i <= ht; ++i) {
+				int nmax = current_level(n, i, 0);
+				cout << "Node(s) at level "<<i<<" = " << nmax <<endl;
+
+			}
+
+		}
+
+		int current_level(struct node* n, int l , int max)
+		{
+			if (n ==0) return 0;
+			if ( l == 1) {
+				max ++;
+			}
+			else {
+				max = current_level(n->l, l - 1, max);
+				max = current_level(n->r, l - 1, max);
+			}
+
+			return max;
+
 		}
 
 		void print_level_order_simple()
@@ -108,6 +138,8 @@ class Bin_tree {
 
 			int ht = height(node);
 			cout << " height " <<ht <<endl;
+
+			find_num_nodes_level(node);
 			print_level_order_simple();
 			cout<<"inorder ->  ";
 			print_inorder(node);
