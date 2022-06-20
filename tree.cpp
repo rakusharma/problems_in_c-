@@ -11,9 +11,6 @@ struct node{
 	struct node* r;
 };
 
-
-/*question - find total number of nodes in each level*/
-
 class Bin_tree {
 	public:
 		Bin_tree(){node = 0;}
@@ -21,7 +18,11 @@ class Bin_tree {
 		struct node* node;
 		list <struct node*>q;
 		int ht;
+		/*below is special -> vector of vector of pointers
+		 * loot at {<params>}. 
+		 * you cannot do z(10, vector<type>())*/
 		vector<vector<struct node*>>z{10, vector<struct node*>()};
+
 		int max(int i, int j)
 		{
 			return ( i>j ? i : j);
@@ -34,9 +35,7 @@ class Bin_tree {
 			for(int i = 1; i <= ht; ++i) {
 				int nmax = current_level(n, i, 0);
 				cout << "Node(s) at level "<<i<<" = " << nmax <<endl;
-
 			}
-
 		}
 
 		int current_level(struct node* n, int l , int max)
@@ -49,9 +48,7 @@ class Bin_tree {
 				max = current_level(n->l, l - 1, max);
 				max = current_level(n->r, l - 1, max);
 			}
-
 			return max;
-
 		}
 
 		void print_level_order_simple()
@@ -70,7 +67,6 @@ class Bin_tree {
 				current_level(n->l, l - 1);
 				current_level(n->r, l - 1);
 			}
-
 		}
 
 		/*A very stupid solution*/
@@ -106,16 +102,12 @@ class Bin_tree {
 			int r = print_level_order_ht(n->r);
 			cout << "node ->" << n->r << " level " << r <<endl;
 			if(r > 0)z[ht-r].push_back(n->r);
-
 			return (max(l, r) + 1);
-
 		}
 		int  height(struct node* n)
 		{
-			if (n == 0){
+			if (n == 0)
 				return 0;
-			}
-
 			int l = height(n->l);
 			int r = height(n->r);
 			return(max(l, r) + 1);
@@ -124,13 +116,10 @@ class Bin_tree {
 
 		int  height(struct node* n, int i)
 		{
-			if (n == 0){
+			if (n == 0)
 				return i;
-			}
 			if (n->r!=0 || n->l!=0)		++i;
-
 			return(max(height(n->l, i), height(n->r, i)));
-
 		}
 
 		void print()
@@ -212,13 +201,8 @@ class Bin_tree {
 				if(_t->l)q.push_back(_t->l);
 				if(_t->r)q.push_back(_t->r);
 			}
-
 			if (q.size() != 0)print_levelorder_rec();
-
-
 		}
-
-
 
 		/*breadth first or level order
 		 *
@@ -230,7 +214,6 @@ class Bin_tree {
 			cout <<n->v <<" ";
 			if (n->l)q.push_back(n->l);
 			if (n->r)q.push_back(n->r);
-
 			while (q.size() != 0) {
 				struct node*_n = q.front();
 				q.pop_front();
@@ -238,7 +221,6 @@ class Bin_tree {
 				if (_n->l)q.push_back(_n->l);
 				if (_n->r)q.push_back(_n->r);
 			}
-
 		}
 
 		/*post order -> left, right, root
@@ -266,7 +248,6 @@ class Bin_tree {
 			cout << n->v << " ";
 			print_preorder(n->l);
 			print_preorder(n->r);
-
 		}
 
 		/*inorder -> left node, root, right node
@@ -301,7 +282,6 @@ class Bin_tree {
 				add_node(&node, &node, v);
 			else if (v > node->v) add_node(&node, &node->r, v);
 			else if (v < node->v) add_node(&node, &node->l, v);
-
 		}
 
 		/*This is BST. Binary tree do not follow num < root or num > root*/
@@ -355,7 +335,6 @@ class Bin_tree {
 #endif
 			for(; i != l.end(); i++)
 				t.add(*i);	
-
 			t.print();
 
 			return 0;
