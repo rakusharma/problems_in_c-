@@ -17,6 +17,8 @@
  5 3 2 4 
  5 6 
  6 5
+ root -> leaf path => [ 2 3 5 6  ]
+ root -> leaf path => [ 2 4  ]
  */
 
 
