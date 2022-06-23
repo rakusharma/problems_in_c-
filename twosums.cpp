@@ -13,6 +13,12 @@ using namespace std;
 class Sol {
 	public:
 
+		/*store the difference as key in the map and search the map with the 
+		 *value as key 
+		 * i = {2,7}, t = 9 => m[7] = 2, m[2] = 7
+		 * m.count(2) = 7 => 2,7
+		 * */
+
 		vector<int> twosum_o(vector<int>& nums, int target)
 		{
 			vector<int>::iterator it = nums.begin();
