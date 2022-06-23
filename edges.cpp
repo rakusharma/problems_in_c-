@@ -64,8 +64,8 @@ class Tree {
 			//if leaf is the last node and first node is root, we have our paths
 
 			vector<vector<int>>::iterator t = paths.begin();
-            vector<int> v;
-            vector<int>::iterator _t;
+			vector<int> v;
+			vector<int>::iterator _t;
 			for(; t != paths.end(); ++t) {
 				v = *t;
 				if (v[0] == node->v && (*(v.end()-1) ==leafs[0] ||  *(v.end()-1) ==leafs[1])){
